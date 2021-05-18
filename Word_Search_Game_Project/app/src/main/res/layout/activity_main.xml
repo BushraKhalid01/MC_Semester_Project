@@ -8,8 +8,8 @@
 
     <Button
         android:id="@+id/startGame"
-        android:layout_width="135dp"
-        android:layout_height="70dp"
+        android:layout_width="122dp"
+        android:layout_height="64dp"
         android:layout_marginTop="20dp"
         android:text="Start Game"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,8 +19,8 @@
 
     <Button
         android:id="@+id/newGame"
-        android:layout_width="135dp"
-        android:layout_height="70dp"
+        android:layout_width="122dp"
+        android:layout_height="64dp"
         android:layout_marginTop="12dp"
         android:text="New Game"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,8 +40,8 @@
 
     <Spinner
         android:id="@+id/levels"
-        android:layout_width="151dp"
-        android:layout_height="52dp"
+        android:layout_width="121dp"
+        android:layout_height="65dp"
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.528"
@@ -52,7 +52,7 @@
         android:id="@+id/imageView2"
         android:layout_width="406dp"
         android:layout_height="107dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

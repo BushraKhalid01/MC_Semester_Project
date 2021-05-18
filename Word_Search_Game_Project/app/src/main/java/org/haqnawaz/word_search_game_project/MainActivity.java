@@ -2,6 +2,7 @@ package org.haqnawaz.word_search_game_project;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -76,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
                     //do nothing
                 }
                 else{
+                    Intent intent = new Intent(MainActivity.this,GameBoard.class);
+                    startActivity(intent);
                     String s= parent.getItemAtPosition(position).toString();
                     Toast.makeText(parent.getContext(), "You Choose Level " + s, Toast.LENGTH_LONG).show();
                 }
