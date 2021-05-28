@@ -137,13 +137,14 @@
                         android:layout_height="wrap_content"
                         android:text="@string/time"
                         android:textColor="@color/black"
+                        android:onClick="selectTime"
                         android:textSize="15dp" />
 
                     <TextView
                         android:id="@+id/set_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/abc_secondary_text_material_dark"
+                        android:textColor="@color/black"
                         android:textSize="15dp" />
 
                 </LinearLayout>
