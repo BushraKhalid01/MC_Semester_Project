@@ -20,6 +20,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         toolbar= findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
     }
 
+    public void AddReminder(View view) {
+        Intent intent = new Intent(MainActivity.this, AddReminder.class);
+        startActivity(intent);
+    }
 }

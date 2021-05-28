@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">To_Do List App</string>
+    <string name="title_activity_add_reminder">Add Task</string>
+    <string name="title_activity_edit_reminder">Edit Task</string>
+    <string name="add_reminder">Task</string>
+    <string name="details">Details</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="repeat">Repeat</string>
+    <string name="repeat_off">Off</string>
+    <string name="repeat_no">Repetition Interval </string>
+    <string name="repeat_type">Type of Repetitions</string>
 </resources>
