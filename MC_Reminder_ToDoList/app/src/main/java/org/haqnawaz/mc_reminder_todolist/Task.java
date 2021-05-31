@@ -1,9 +1,9 @@
 package org.haqnawaz.mc_reminder_todolist;
 
-import androidx.annotation.NonNull;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-
-public class Task {
+public class Task implements Parcelable {
     private int Id;
     private String title;
     private String time;
@@ -15,7 +15,7 @@ public class Task {
 
     public Task(int id, String title, String time, String date, boolean repeat, boolean active, String intervals, String intervalType) {
         this.title = title;
-        this.date = time;
+        this.time = time;
         this.date = date;
         this.repeat = repeat;
         this.active = active;
@@ -23,6 +23,29 @@ public class Task {
         this.intervalType = intervalType;
         this.Id = id;
     }
+
+    protected Task(Parcel in) {
+        Id = in.readInt();
+        title = in.readString();
+        time = in.readString();
+        date = in.readString();
+        repeat = in.readByte() != 0;
+        active = in.readByte() != 0;
+        intervals = in.readString();
+        intervalType = in.readString();
+    }
+
+    public static final Creator<Task> CREATOR = new Creator<Task>() {
+        @Override
+        public Task createFromParcel(Parcel in) {
+            return new Task(in);
+        }
+
+        @Override
+        public Task[] newArray(int size) {
+            return new Task[size];
+        }
+    };
 
     public String getTitle() {
         return title;
@@ -98,5 +121,23 @@ public class Task {
                 ", intervalType='" + intervalType + '\'' +
                 ", Id=" + Id +
                 '}';
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(Id);
+        parcel.writeString(title);
+        parcel.writeString(time);
+        parcel.writeString(date);
+        parcel.writeByte((byte) (repeat ? 1 : 0));
+        parcel.writeByte((byte) (active ? 1 : 0));
+        parcel.writeString(intervals);
+        parcel.writeString(intervalType);
     }
 }
