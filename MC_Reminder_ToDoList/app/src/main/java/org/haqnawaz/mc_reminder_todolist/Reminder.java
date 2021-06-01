@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 public class Reminder extends AppCompatActivity {
 
@@ -48,7 +49,7 @@ public class Reminder extends AppCompatActivity {
         {
             Calendar c = Calendar.getInstance();
             SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
-            SimpleDateFormat time = new SimpleDateFormat("HH:mm a");
+            SimpleDateFormat time = new SimpleDateFormat("hh:mm a", Locale.US);
             date2.setText(date.format(c.getTime()));
             time2.setText(time.format(c.getTime()));
         }
@@ -84,13 +85,43 @@ public class Reminder extends AppCompatActivity {
         timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                if(hourOfDay>=12){
-                    amPm="PM";
+
+
+                if (hourOfDay >=0 && hourOfDay < 12){
+                    if(hourOfDay==0)
+                    {
+                        hourOfDay=hourOfDay+12;
+                    }
+                    amPm = "AM";
+                } else{
+                    if(hourOfDay>12)
+                    {
+                        hourOfDay=hourOfDay-12;
+                    }
+                    amPm = "PM";
                 }
-                else{
-                    amPm="AM";
+                if(minute<10)
+                {
+                    if(hourOfDay<10)
+                    {
+                        time2.setText("0"+hourOfDay+" : 0"+ minute+" "+amPm);
+                    }
+                    else
+                        {
+                        time2.setText(hourOfDay+" : 0"+ minute+" "+amPm);
+                    }
                 }
-                time2.setText(String.format("%02d:%02d",hourOfDay, minute)+" "+amPm);
+                else
+                {
+                    if(hourOfDay<10)
+                    {
+                        time2.setText("0"+hourOfDay+" : "+ minute+" "+amPm);
+                    }
+                    else
+                    {
+                        time2.setText(hourOfDay+" : "+ minute+" "+amPm);
+                    }
+                }
             }
         },currHour,currMin,false);
         timePickerDialog.show();
