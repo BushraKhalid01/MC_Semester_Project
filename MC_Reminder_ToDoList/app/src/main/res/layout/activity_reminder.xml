@@ -4,7 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FBFBFB"
     tools:context=".Reminder">
+
+    <Button
+        android:id="@+id/saveTask"
+        android:layout_width="62dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="325dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="24dp"
+        android:background="#83BFDA"
+        android:onClick="SaveTask"
+        android:text="Save"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#1E1A1A"
+        android:textIsSelectable="false" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -13,7 +31,9 @@
         android:background="@color/black"
         android:minHeight="?attr/actionBarSize"
         app:contentInsetLeft="0dp"
-        app:contentInsetStart="16dp" />
+        app:contentInsetStart="16dp"
+        app:title="Add Task"
+        app:titleTextColor="#FFFFFF" />
 
     <LinearLayout
         android:id="@+id/add_reminder_layout_top"
@@ -43,13 +63,13 @@
 
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_below="@id/add_reminder_layout_top"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent"
+        android:layout_below="@id/add_reminder_layout_top">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/details"
@@ -91,9 +111,9 @@
                         android:id="@+id/date_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:onClick="selectDate"
                         android:text="@string/date"
                         android:textColor="@color/black"
-                        android:onClick="selectDate"
                         android:textSize="15dp" />
 
                     <TextView
@@ -135,9 +155,9 @@
                         android:id="@+id/time_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:onClick="selectTime"
                         android:text="@string/time"
                         android:textColor="@color/black"
-                        android:onClick="selectTime"
                         android:textSize="15dp" />
 
                     <TextView
@@ -187,7 +207,7 @@
                         android:id="@+id/set_repeat"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/abc_secondary_text_material_dark"
+                        android:textColor="@color/black"
                         android:textSize="15dp" />
 
                 </LinearLayout>
@@ -245,7 +265,7 @@
                         android:id="@+id/set_repeat_no"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/abc_secondary_text_material_dark"
+                        android:textColor="@color/black"
                         android:textSize="15dp" />
 
                 </LinearLayout>
@@ -289,7 +309,7 @@
                         android:id="@+id/set_repeat_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/abc_secondary_text_material_dark"
+                        android:textColor="@color/black"
                         android:textSize="15dp" />
 
                 </LinearLayout>
@@ -310,16 +330,16 @@
         android:id="@+id/starred1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="168dp"
         android:clickable="true"
         android:onClick="selectFab1"
-        app:fab_icon="@drawable/ic_notifications_off_grey600_24dp"
         app:fab_colorNormal="@color/colorAccent"
         app:fab_colorPressed="@color/fab_pressed"
-        app:fab_size="normal"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="168dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="8dp"/>
+        app:fab_icon="@drawable/ic_notifications_off_grey600_24dp"
+        app:fab_size="normal" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"

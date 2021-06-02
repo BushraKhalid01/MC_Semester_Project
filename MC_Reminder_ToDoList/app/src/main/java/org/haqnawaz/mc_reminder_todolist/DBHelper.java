@@ -30,14 +30,13 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String SQL_CREATE_ALARM_TABLE =  "CREATE TABLE " + TASK_TABLE + " (" +
                  TASK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                TASK_TITLE + " TEXT NOT NULL, " +
-                TASK_TIME + " TEXT NOT NULL, " +
-                TASK_DATE + " TEXT NOT NULL, " +
-                TASK_REPEAT + " TEXT NOT NULL, " +
-                TASK_ACTIVE + " TEXT NOT NULL, " +
-                TASK_INTERVALS + " TEXT NOT NULL, " +
-                TASK_INTERVAL_TYPE + " TEXT NOT NULL, " +
-                TASK_ACTIVE + " TEXT NOT NULL " + " );";
+                TASK_TITLE + " TEXT , " +
+                TASK_TIME + " TEXT , " +
+                TASK_DATE + " TEXT , " +
+                TASK_REPEAT + " BOOL , " +
+                TASK_INTERVALS + " INT , " +
+                TASK_INTERVAL_TYPE + " TEXT , " +
+                TASK_ACTIVE + " BOOL )";
         db.execSQL(SQL_CREATE_ALARM_TABLE);
     }
 
@@ -97,7 +96,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 String taskDate =cursor.getString(3);
                 Boolean taskRepeat=cursor.getInt(4)==1?true:false;
                 Boolean taskActive=cursor.getInt(5)==1?true:false;
-                String interval=cursor.getString(6);
+                int interval=cursor.getInt(6);
                 String intervalType=cursor.getString(7);
                 Task taskModel=new Task(taskId,taskTitle,taskTime,taskDate, taskRepeat, taskActive, interval, intervalType);
                 myList.add(taskModel);

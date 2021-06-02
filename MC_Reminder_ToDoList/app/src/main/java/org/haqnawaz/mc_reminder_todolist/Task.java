@@ -10,10 +10,10 @@ public class Task implements Parcelable {
     private String date;
     private boolean repeat;
     private boolean active;
-    private String intervals;
+    private int intervals;
     private String intervalType;
 
-    public Task(int id, String title, String time, String date, boolean repeat, boolean active, String intervals, String intervalType) {
+    public Task(int id, String title, String time, String date, boolean repeat, boolean active, int intervals, String intervalType) {
         this.title = title;
         this.time = time;
         this.date = date;
@@ -31,7 +31,7 @@ public class Task implements Parcelable {
         date = in.readString();
         repeat = in.readByte() != 0;
         active = in.readByte() != 0;
-        intervals = in.readString();
+        intervals = in.readInt();
         intervalType = in.readString();
     }
 
@@ -66,7 +66,7 @@ public class Task implements Parcelable {
     public boolean isActive() {
         return active;
     }
-    public String getIntervals() {
+    public int getIntervals() {
         return intervals;
     }
 
@@ -98,7 +98,7 @@ public class Task implements Parcelable {
         this.active = active;
     }
 
-    public void setIntervals(String intervals) {
+    public void setIntervals(int intervals) {
         this.intervals = intervals;
     }
 
@@ -137,7 +137,7 @@ public class Task implements Parcelable {
         parcel.writeString(date);
         parcel.writeByte((byte) (repeat ? 1 : 0));
         parcel.writeByte((byte) (active ? 1 : 0));
-        parcel.writeString(intervals);
+        parcel.writeInt(intervals);
         parcel.writeString(intervalType);
     }
 }

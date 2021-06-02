@@ -31,13 +31,14 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         setContentView(R.layout.activity_main);
         toolbar= findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setTitle(R.string.app_name);
         setListAdapter();
     }
     private void setListAdapter(){
-        Task t1 = new Task(-1, "abc", "14:2:46", "29/05/2021", true, true, "4", "monthly");
-        Task t2 = new Task(-1, "def", "14:2:46", "29/05/2021", true, true, "4", "monthly");
-        Task t3 = new Task(-1, "ghi", "14:2:46", "29/05/2021", true, true, "4", "monthly");
-        Task t4 = new Task(-1, "jkl", "14:2:46", "29/05/2021", true, true, "4", "monthly");
+        Task t1 = new Task(-1, "abc", "14:2:46", "29/05/2021", true, true, 4, "monthly");
+        Task t2 = new Task(-1, "def", "14:2:46", "29/05/2021", true, true, 4, "monthly");
+        Task t3 = new Task(-1, "ghi", "14:2:46", "29/05/2021", true, true, 4, "monthly");
+        Task t4 = new Task(-1, "jkl", "14:2:46", "29/05/2021", true, true, 4, "monthly");
         taskList = new ArrayList<Task>();
         taskList.addAll(Arrays.asList(new Task[]{t1, t2, t3, t4}));
         recyclerView = findViewById(R.id.list);
