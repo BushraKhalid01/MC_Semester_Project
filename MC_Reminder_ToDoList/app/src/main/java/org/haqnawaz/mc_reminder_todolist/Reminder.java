@@ -33,25 +33,21 @@ public class Reminder extends AppCompatActivity {
     int currMin;
     String amPm;
     Calendar calendar;
-    TextView date1 = findViewById(R.id.date_text);
-    TextView date2 = findViewById(R.id.set_date);
-    TextView time1 = findViewById(R.id.time_text);
-    TextView time2 = findViewById(R.id.set_time);
     TimePickerDialog timePickerDialog;
     DatePickerDialog datePickerDialog;
     private String repeat;
     private String repeatNo;
     private String repeatType;
     private String isActive;
-    Switch active = findViewById(R.id.repeat_switch);
-    TextView repeatText = findViewById(R.id.set_repeat);
-    TextView repeatNum = findViewById(R.id.set_repeat_no);
-    TextView repType = findViewById(R.id.set_repeat_type);
-    TextView repeatTypeText = findViewById(R.id.set_repeat_type);
-    EditText title = findViewById(R.id.reminder_title);
     RecyclerViewAdapter recyclerViewAdapter;
-
-
+    Switch active;
+    TextView date2;
+    TextView repeatText;
+    TextView repeatNum;
+    TextView repType;
+    TextView repeatTypeText;
+    TextView time2;
+    EditText title;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -59,9 +55,14 @@ public class Reminder extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reminder);
 
+        date2 = findViewById(R.id.set_date);
+        time2 = findViewById(R.id.set_time);
+        active = findViewById(R.id.repeat_switch);
+        repeatText = findViewById(R.id.set_repeat);
+        repeatNum = findViewById(R.id.set_repeat_no);
+        repType = findViewById(R.id.set_repeat_type);
+        repeatTypeText = findViewById(R.id.set_repeat_type);
 
-
-        isActive="true";
         repeatNo=Integer.toString(1);
         repeatType="Hour";
         repeat="true";
@@ -219,14 +220,18 @@ public class Reminder extends AppCompatActivity {
 
 
     public void SaveTask(View view) {
+        date2 = findViewById(R.id.set_date);
+        time2 = findViewById(R.id.set_time);
+        active = findViewById(R.id.repeat_switch);
+        repeatText = findViewById(R.id.set_repeat);
+        repeatNum = findViewById(R.id.set_repeat_no);
+        repType = findViewById(R.id.set_repeat_type);
+        repeatTypeText = findViewById(R.id.set_repeat_type);
+        title = findViewById(R.id.reminder_title);
 
-
-        task = new Task(1,title.getText().toString(),date2.getText().toString(),time2.getText().toString(),active.isChecked(),active.isChecked(),
-                Integer.parseInt(repeatNum.getText().toString()),repeatTypeText.getText().toString());
-        Toast.makeText(Reminder.this, task.toString(), Toast.LENGTH_SHORT).show();
-       /* try {
+        try {
             task = new Task(1,title.getText().toString(),date2.getText().toString(),time2.getText().toString(),active.isChecked(),active.isChecked(),
-                    Integer.parseInt(repeatNum.getText().toString()),repeatTypeText.getText().toString());
+            Integer.parseInt(repeatNum.getText().toString()),repeatTypeText.getText().toString());
             //task = new Task(1,"ABC","2/6/2021","08:56 PM",true,true,10,"Day");
             Toast.makeText(Reminder.this, task.toString(), Toast.LENGTH_SHORT).show();
         }
@@ -234,6 +239,6 @@ public class Reminder extends AppCompatActivity {
             Toast.makeText(Reminder.this, "Error", Toast.LENGTH_SHORT).show();
         }
         DBHelper dbHelper = new DBHelper(Reminder.this);
-        boolean b = dbHelper.addTask(task);*/
+        boolean b = dbHelper.addTask(task);
     }
 }
