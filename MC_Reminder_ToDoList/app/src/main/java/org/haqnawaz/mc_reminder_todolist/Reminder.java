@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
@@ -84,6 +85,12 @@ public class Reminder extends AppCompatActivity {
         {
             date2.setText(editTask.getDate());
             time2.setText(editTask.getTime());
+
+
+            active.setChecked(editTask.isActive());
+           // repeatNum.setText(editTask.getIntervals());
+            repeatTypeText.setText(editTask.getIntervalType());
+            Log.d(Reminder.this, editTask.toString(), Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -232,6 +239,29 @@ public class Reminder extends AppCompatActivity {
         try {
             task = new Task(1,title.getText().toString(),date2.getText().toString(),time2.getText().toString(),active.isChecked(),active.isChecked(),
             Integer.parseInt(repeatNum.getText().toString()),repeatTypeText.getText().toString());
+            //task = new Task(1,"ABC","2/6/2021","08:56 PM",true,true,10,"Day");
+            Toast.makeText(Reminder.this, task.toString(), Toast.LENGTH_SHORT).show();
+        }
+        catch (Exception e){
+            Toast.makeText(Reminder.this, "Error", Toast.LENGTH_SHORT).show();
+        }
+        DBHelper dbHelper = new DBHelper(Reminder.this);
+        boolean b = dbHelper.addTask(task);
+    }
+
+    public void DeleteTask(View view) {
+        date2 = findViewById(R.id.set_date);
+        time2 = findViewById(R.id.set_time);
+        active = findViewById(R.id.repeat_switch);
+        repeatText = findViewById(R.id.set_repeat);
+        repeatNum = findViewById(R.id.set_repeat_no);
+        repType = findViewById(R.id.set_repeat_type);
+        repeatTypeText = findViewById(R.id.set_repeat_type);
+        title = findViewById(R.id.reminder_title);
+
+        try {
+            task = new Task(1,title.getText().toString(),time2.getText().toString(),date2.getText().toString(),active.isChecked(),active.isChecked(),
+                    Integer.parseInt(repeatNum.getText().toString()),repeatTypeText.getText().toString());
             //task = new Task(1,"ABC","2/6/2021","08:56 PM",true,true,10,"Day");
             Toast.makeText(Reminder.this, task.toString(), Toast.LENGTH_SHORT).show();
         }

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 
 import java.io.Serializable;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     RecyclerView.LayoutManager layoutManager;
     List<Task> taskList = new ArrayList<Task>();
     private Toolbar toolbar;
+    ArrayAdapter<Task> arrayAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,12 +37,11 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         setListAdapter();
     }
     private void setListAdapter(){
-        Task t1 = new Task(-1, "abc", "14:2:46", "29/05/2021", true, true, 4, "monthly");
-        Task t2 = new Task(-1, "def", "14:2:46", "29/05/2021", true, true, 4, "monthly");
-        Task t3 = new Task(-1, "ghi", "14:2:46", "29/05/2021", true, true, 4, "monthly");
-        Task t4 = new Task(-1, "jkl", "14:2:46", "29/05/2021", true, true, 4, "monthly");
-        taskList = new ArrayList<Task>();
-        taskList.addAll(Arrays.asList(new Task[]{t1, t2, t3, t4}));
+
+
+        DBHelper dbHelper = new DBHelper(MainActivity.this);
+        taskList = dbHelper.getAllTasks();
+
         recyclerView = findViewById(R.id.list);
 
         //recyclerView.setHasFixedSize(true);
