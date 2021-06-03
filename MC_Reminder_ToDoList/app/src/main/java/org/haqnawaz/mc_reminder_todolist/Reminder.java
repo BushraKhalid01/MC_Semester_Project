@@ -64,6 +64,8 @@ public class Reminder extends AppCompatActivity {
         repType = findViewById(R.id.set_repeat_type);
         repeatTypeText = findViewById(R.id.set_repeat_type);
 
+        title=findViewById(R.id.reminder_title);
+
         repeatNo=Integer.toString(1);
         repeatType="Hour";
         repeat="true";
@@ -86,11 +88,11 @@ public class Reminder extends AppCompatActivity {
             date2.setText(editTask.getDate());
             time2.setText(editTask.getTime());
 
-
+            title.setText(editTask.getTitle());
             active.setChecked(editTask.isActive());
-           // repeatNum.setText(editTask.getIntervals());
+            repeatNum.setText(String.valueOf(editTask.getIntervals()));
             repeatTypeText.setText(editTask.getIntervalType());
-            Log.d(Reminder.this, editTask.toString(), Toast.LENGTH_SHORT).show();
+            Log.d("s", editTask.toString());
         }
 
     }

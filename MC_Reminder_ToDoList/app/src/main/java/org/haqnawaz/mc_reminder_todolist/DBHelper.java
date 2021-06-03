@@ -95,10 +95,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 String taskTime =cursor.getString(2);
                 String taskDate =cursor.getString(3);
                 Boolean taskRepeat=cursor.getInt(4)==1?true:false;
-                Boolean taskActive=cursor.getInt(5)==1?true:false;
-                int interval=cursor.getInt(6);
-                String intervalType=cursor.getString(7);
-                Task taskModel=new Task(taskId,taskTitle,taskTime,taskDate, taskRepeat, taskActive, interval, intervalType);
+                int interval=cursor.getInt(5);
+                String intervalType=cursor.getString(6);
+                Task taskModel=new Task(taskId,taskTitle,taskTime,taskDate, taskRepeat, taskRepeat, interval, intervalType);
                 myList.add(taskModel);
             }while (cursor.moveToNext());
         }
