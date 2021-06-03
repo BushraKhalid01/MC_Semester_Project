@@ -49,13 +49,13 @@ public class Reminder extends AppCompatActivity {
     TextView repeatTypeText;
     TextView time2;
     EditText title;
+    int id;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reminder);
-
         date2 = findViewById(R.id.set_date);
         time2 = findViewById(R.id.set_time);
         active = findViewById(R.id.repeat_switch);
@@ -87,12 +87,12 @@ public class Reminder extends AppCompatActivity {
         {
             date2.setText(editTask.getDate());
             time2.setText(editTask.getTime());
-
+            id=editTask.getId();
             title.setText(editTask.getTitle());
             active.setChecked(editTask.isActive());
             repeatNum.setText(String.valueOf(editTask.getIntervals()));
             repeatTypeText.setText(editTask.getIntervalType());
-            Log.d("s", editTask.toString());
+            //Log.d("s", editTask.toString());
         }
 
     }
@@ -109,7 +109,7 @@ public class Reminder extends AppCompatActivity {
                 date2.setText(dayOfMonth + "/" + (month+1) + "/" + year);
             }
         },year,month,day);
-        Log.d("sss", String.valueOf(date2));
+        //Log.d("sss", String.valueOf(date2));
         datePickerDialog.show();
     }
 
@@ -251,26 +251,5 @@ public class Reminder extends AppCompatActivity {
         boolean b = dbHelper.addTask(task);
     }
 
-    public void DeleteTask(View view) {
-        date2 = findViewById(R.id.set_date);
-        time2 = findViewById(R.id.set_time);
-        active = findViewById(R.id.repeat_switch);
-        repeatText = findViewById(R.id.set_repeat);
-        repeatNum = findViewById(R.id.set_repeat_no);
-        repType = findViewById(R.id.set_repeat_type);
-        repeatTypeText = findViewById(R.id.set_repeat_type);
-        title = findViewById(R.id.reminder_title);
 
-        try {
-            task = new Task(1,title.getText().toString(),time2.getText().toString(),date2.getText().toString(),active.isChecked(),active.isChecked(),
-                    Integer.parseInt(repeatNum.getText().toString()),repeatTypeText.getText().toString());
-            //task = new Task(1,"ABC","2/6/2021","08:56 PM",true,true,10,"Day");
-            Toast.makeText(Reminder.this, task.toString(), Toast.LENGTH_SHORT).show();
-        }
-        catch (Exception e){
-            Toast.makeText(Reminder.this, "Error", Toast.LENGTH_SHORT).show();
-        }
-        DBHelper dbHelper = new DBHelper(Reminder.this);
-        boolean b = dbHelper.addTask(task);
-    }
 }

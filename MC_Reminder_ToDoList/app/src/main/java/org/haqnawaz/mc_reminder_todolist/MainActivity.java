@@ -70,4 +70,5 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         intent.putExtra("EditTask",taskList.get(position));
         startActivity(intent);
     }
+
 }
