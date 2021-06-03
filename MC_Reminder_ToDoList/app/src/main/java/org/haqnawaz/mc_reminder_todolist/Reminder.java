@@ -251,5 +251,28 @@ public class Reminder extends AppCompatActivity {
         boolean b = dbHelper.addTask(task);
     }
 
+    public void DeleteTask(View view) {
 
+        date2 = findViewById(R.id.set_date);
+        time2 = findViewById(R.id.set_time);
+        active = findViewById(R.id.repeat_switch);
+        repeatText = findViewById(R.id.set_repeat);
+        repeatNum = findViewById(R.id.set_repeat_no);
+        repType = findViewById(R.id.set_repeat_type);
+        repeatTypeText = findViewById(R.id.set_repeat_type);
+        title = findViewById(R.id.reminder_title);
+
+        try {
+            task = new Task(id,title.getText().toString(),time2.getText().toString(),date2.getText().toString(),active.isChecked(),active.isChecked(),
+                    Integer.parseInt(repeatNum.getText().toString()),repeatTypeText.getText().toString());
+            //task = new Task(1,"ABC","2/6/2021","08:56 PM",true,true,10,"Day");
+            Toast.makeText(Reminder.this, task.toString(), Toast.LENGTH_SHORT).show();
+        }
+        catch (Exception e){
+            Toast.makeText(Reminder.this, "Error", Toast.LENGTH_SHORT).show();
+        }
+        DBHelper dbHelper = new DBHelper(Reminder.this);
+        boolean b = dbHelper.deleteTask(task);
+
+    }
 }
