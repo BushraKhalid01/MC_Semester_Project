@@ -13,6 +13,7 @@ public class Task implements Parcelable {
     private int intervals;
     private String intervalType;
 
+
     public Task(int id, String title, String time, String date, boolean repeat, boolean active, int intervals, String intervalType) {
         this.title = title;
         this.time = time;

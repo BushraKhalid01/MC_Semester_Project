@@ -16,6 +16,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Switch;
@@ -50,7 +51,8 @@ public class Reminder extends AppCompatActivity {
     TextView time2;
     EditText title;
     int id;
-
+    boolean updateTask;
+    Button delete_btn;
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,13 +65,12 @@ public class Reminder extends AppCompatActivity {
         repeatNum = findViewById(R.id.set_repeat_no);
         repType = findViewById(R.id.set_repeat_type);
         repeatTypeText = findViewById(R.id.set_repeat_type);
-
+        delete_btn = (Button)findViewById(R.id.deleteTask);
         title=findViewById(R.id.reminder_title);
 
         repeatNo=Integer.toString(1);
         repeatType="Hour";
         repeat="true";
-
         Task editTask= getIntent().getParcelableExtra("EditTask");
         if(editTask==null)
         {
@@ -85,6 +86,7 @@ public class Reminder extends AppCompatActivity {
         }
         else
         {
+            updateTask=true;
             date2.setText(editTask.getDate());
             time2.setText(editTask.getTime());
             id=editTask.getId();
@@ -92,6 +94,7 @@ public class Reminder extends AppCompatActivity {
             active.setChecked(editTask.isActive());
             repeatNum.setText(String.valueOf(editTask.getIntervals()));
             repeatTypeText.setText(editTask.getIntervalType());
+            delete_btn.setVisibility(View.VISIBLE);
             //Log.d("s", editTask.toString());
         }
 
@@ -239,7 +242,7 @@ public class Reminder extends AppCompatActivity {
         title = findViewById(R.id.reminder_title);
 
         try {
-            task = new Task(1,title.getText().toString(),date2.getText().toString(),time2.getText().toString(),active.isChecked(),active.isChecked(),
+            task = new Task(id,title.getText().toString(),date2.getText().toString(),time2.getText().toString(),active.isChecked(),active.isChecked(),
             Integer.parseInt(repeatNum.getText().toString()),repeatTypeText.getText().toString());
             //task = new Task(1,"ABC","2/6/2021","08:56 PM",true,true,10,"Day");
             Toast.makeText(Reminder.this, task.toString(), Toast.LENGTH_SHORT).show();
@@ -248,7 +251,14 @@ public class Reminder extends AppCompatActivity {
             Toast.makeText(Reminder.this, "Error", Toast.LENGTH_SHORT).show();
         }
         DBHelper dbHelper = new DBHelper(Reminder.this);
-        boolean b = dbHelper.addTask(task);
+        if(updateTask)
+        {
+            boolean b = dbHelper.updateTask(task);
+        }
+        else
+        {
+            boolean b = dbHelper.addTask(task);
+        }
         BackToMain(view);
     }
 

@@ -6,22 +6,6 @@
     android:layout_height="match_parent"
     android:background="#FBFBFB"
     tools:context=".Reminder">
-    <Button
-        android:id="@+id/deleteTask"
-        android:layout_width="62dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="325dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="24dp"
-        android:background="#83BFDA"
-        android:onClick="DeleteTask"
-        android:text="Delete"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#1E1A1A"
-        android:textIsSelectable="false" />
 
     <Button
         android:id="@+id/saveTask"
@@ -30,15 +14,34 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="242dp"
+        android:layout_marginStart="342dp"
         android:layout_marginTop="5dp"
-        android:layout_marginEnd="107dp"
+        android:layout_marginEnd="7dp"
         android:background="#83BFDA"
         android:onClick="SaveTask"
         android:text="Save"
         android:textColor="#FFFFFF"
         android:textColorHint="#1E1A1A"
         android:textIsSelectable="false" />
+
+
+    <Button
+        android:id="@+id/deleteTask"
+        android:layout_width="62dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="267dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="82dp"
+        android:background="#83BFDA"
+        android:onClick="DeleteTask"
+        android:text="Delete"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#1E1A1A"
+        android:textIsSelectable="false"
+        android:visibility="invisible" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
