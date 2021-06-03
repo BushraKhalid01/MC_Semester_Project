@@ -249,6 +249,7 @@ public class Reminder extends AppCompatActivity {
         }
         DBHelper dbHelper = new DBHelper(Reminder.this);
         boolean b = dbHelper.addTask(task);
+        BackToMain(view);
     }
 
     public void DeleteTask(View view) {
@@ -273,6 +274,10 @@ public class Reminder extends AppCompatActivity {
         }
         DBHelper dbHelper = new DBHelper(Reminder.this);
         boolean b = dbHelper.deleteTask(task);
-
+        BackToMain(view);
+    }
+    public void BackToMain(View view) {
+        Intent intent = new Intent(Reminder.this, MainActivity.class);
+        startActivity(intent);
     }
 }
