@@ -70,5 +70,10 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         intent.putExtra("EditTask",taskList.get(position));
         startActivity(intent);
     }
-
+    @Override
+    public void onResume()
+    {  // After a pause OR at startup
+        super.onResume();
+        setListAdapter();
+    }
 }
