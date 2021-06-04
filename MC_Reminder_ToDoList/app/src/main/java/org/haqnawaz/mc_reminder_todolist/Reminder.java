@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -52,7 +53,7 @@ public class Reminder extends AppCompatActivity {
     EditText title;
     int id;
     boolean updateTask;
-    Button delete_btn;
+    ImageView delete_btn;
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +66,7 @@ public class Reminder extends AppCompatActivity {
         repeatNum = findViewById(R.id.set_repeat_no);
         repType = findViewById(R.id.set_repeat_type);
         repeatTypeText = findViewById(R.id.set_repeat_type);
-        delete_btn = (Button)findViewById(R.id.deleteTask);
+        delete_btn = (ImageView) findViewById(R.id.deleteTask);
         title=findViewById(R.id.reminder_title);
 
         repeatNo=Integer.toString(1);
@@ -245,7 +246,14 @@ public class Reminder extends AppCompatActivity {
             task = new Task(id,title.getText().toString(),date2.getText().toString(),time2.getText().toString(),active.isChecked(),active.isChecked(),
             Integer.parseInt(repeatNum.getText().toString()),repeatTypeText.getText().toString());
             //task = new Task(1,"ABC","2/6/2021","08:56 PM",true,true,10,"Day");
-            Toast.makeText(Reminder.this, task.toString(), Toast.LENGTH_SHORT).show();
+            if(updateTask)
+            {
+                Toast.makeText(getApplicationContext(), "Successfully Updated", Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                Toast.makeText(getApplicationContext(), "Successfully Saved", Toast.LENGTH_SHORT).show();
+            }
         }
         catch (Exception e){
             Toast.makeText(Reminder.this, "Error", Toast.LENGTH_SHORT).show();
@@ -277,7 +285,7 @@ public class Reminder extends AppCompatActivity {
             task = new Task(id,title.getText().toString(),time2.getText().toString(),date2.getText().toString(),active.isChecked(),active.isChecked(),
                     Integer.parseInt(repeatNum.getText().toString()),repeatTypeText.getText().toString());
             //task = new Task(1,"ABC","2/6/2021","08:56 PM",true,true,10,"Day");
-            Toast.makeText(Reminder.this, task.toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Successfully Deleted", Toast.LENGTH_SHORT).show();
         }
         catch (Exception e){
             Toast.makeText(Reminder.this, "Error", Toast.LENGTH_SHORT).show();
