@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     List<Task> taskList = new ArrayList<Task>();
     private Toolbar toolbar;
     ArrayAdapter<Task> arrayAdapter;
+    TextView NO_REMINDER;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         toolbar= findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(R.string.app_name);
+        NO_REMINDER=findViewById(R.id.no_reminder_text);
         setListAdapter();
     }
     private void setListAdapter(){
@@ -41,7 +44,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 
         DBHelper dbHelper = new DBHelper(MainActivity.this);
         taskList = dbHelper.getAllTasks();
-
+        if (taskList.size()!=0){
+            NO_REMINDER.setVisibility(View.INVISIBLE);
+        }
         recyclerView = findViewById(R.id.list);
 
         //recyclerView.setHasFixedSize(true);
