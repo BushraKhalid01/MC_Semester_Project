@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     }
 
 
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void setAlarm(Calendar calendar,Task task) {
         Toast.makeText(this, "hhh",Toast.LENGTH_SHORT).show();
@@ -113,7 +114,17 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
                  alarmIntent);
     }
 
- 
+    private void cancelAlarm(int requestId) {
+        AlarmManager alarmManager =
+                (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlertReceiver.class);
+        PendingIntent pendingIntent =
+                PendingIntent.getService(this, requestId, intent,
+                        PendingIntent.FLAG_NO_CREATE);
+        if (pendingIntent != null && alarmManager != null) {
+            alarmManager.cancel(pendingIntent);
+        }
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void setAlarms(){
@@ -122,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         for(int i=0;i<taskList.size();i++){
               Task t=taskList.get(i);
               long hour=Integer.parseInt(t.getTime().split(":")[0].trim());
-              long min=Integer.parseInt(t.getTime().split(":")[1].split(" ")[1].trim());
+            long min=Integer.parseInt(t.getTime().split(":")[1].split(" ")[1].trim());
               calender.set(Calendar.HOUR_OF_DAY, (int)hour);
               calender.set(Calendar.MINUTE, (int)min);
               calender.set(Calendar.DAY_OF_MONTH, Integer.parseInt(t.getDate().split("/")[0].trim()));
@@ -136,8 +147,15 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         }
     }
 
+    private void cancelAlarms(){
+        for(int i=0;i<taskList.size();i++){
+            cancelAlarm(taskList.get(i).getId());
+        }
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
     }
 }
