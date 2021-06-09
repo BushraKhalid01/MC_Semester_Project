@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
+
 public class Reminder extends AppCompatActivity {
     Task task;
     int day;
@@ -54,9 +55,11 @@ public class Reminder extends AppCompatActivity {
     int id;
     boolean updateTask;
     ImageView delete_btn;
+    String FirstLetter;
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reminder);
         date2 = findViewById(R.id.set_date);
@@ -68,6 +71,7 @@ public class Reminder extends AppCompatActivity {
         repeatTypeText = findViewById(R.id.set_repeat_type);
         delete_btn = (ImageView) findViewById(R.id.deleteTask);
         title=findViewById(R.id.reminder_title);
+
 
         repeatNo=Integer.toString(1);
         repeatType="Hour";
@@ -241,7 +245,7 @@ public class Reminder extends AppCompatActivity {
         repType = findViewById(R.id.set_repeat_type);
         repeatTypeText = findViewById(R.id.set_repeat_type);
         title = findViewById(R.id.reminder_title);
-
+        FirstLetter=title.toString().substring(0,1);
         try {
             task = new Task(id,title.getText().toString(),date2.getText().toString(),time2.getText().toString(),active.isChecked(),active.isChecked(),
             Integer.parseInt(repeatNum.getText().toString()),repeatTypeText.getText().toString());

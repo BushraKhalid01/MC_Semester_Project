@@ -12,6 +12,7 @@ public class Task implements Parcelable {
     private boolean active;
     private int intervals;
     private String intervalType;
+    private String FirstLetter;
 
 
     public Task(int id, String title, String time, String date, boolean repeat, boolean active, int intervals, String intervalType) {
@@ -47,7 +48,9 @@ public class Task implements Parcelable {
             return new Task[size];
         }
     };
-
+    public String getFirstLetter() {
+        return FirstLetter;
+    }
     public String getTitle() {
         return title;
     }
@@ -79,6 +82,9 @@ public class Task implements Parcelable {
         return Id;
     }
 
+    public void setFirstLetter(String letter) {
+        this.FirstLetter=FirstLetter;
+    }
     public void setTitle(String title) {
         this.title = title;
     }

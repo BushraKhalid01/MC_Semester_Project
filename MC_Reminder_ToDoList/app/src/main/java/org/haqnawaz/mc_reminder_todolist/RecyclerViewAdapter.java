@@ -35,6 +35,7 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyVie
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.data= taskList.get(position);
+        holder.textViewFirstLetter.setText(holder.data.getTitle().substring(0,1));
         holder.textViewTaskName.setText(holder.data.getTitle());
         holder.textViewTaskDate.setText(String.valueOf(holder.data.getDate()));
         holder.textViewTaskTime.setText(holder.data.getTime());
@@ -46,18 +47,19 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyVie
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        ImageView imageViewTask;
         TextView textViewTaskName;
         TextView textViewTaskTime;
         TextView textViewTaskDate;
+        TextView textViewFirstLetter;
         Task data;
         TaskListener onTaskListener;
         public MyViewHolder(@NonNull View itemView,TaskListener listener) {
             super(itemView);
-            imageViewTask = itemView.findViewById(R.id.imageViewTaskPicture);
+            textViewFirstLetter = itemView.findViewById(R.id.textViewFirstLetter);
             textViewTaskName = itemView.findViewById(R.id.textViewTaskName);
             textViewTaskDate = itemView.findViewById(R.id.textViewTaskDate);
             textViewTaskTime= itemView.findViewById(R.id.textViewTime);
+
             this.onTaskListener=listener;
             itemView.setOnClickListener(this);
         }
