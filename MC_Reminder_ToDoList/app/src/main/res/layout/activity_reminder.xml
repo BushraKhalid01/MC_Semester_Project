@@ -51,6 +51,7 @@
         android:layout_below="@+id/toolbar"
         android:background="@color/colorPrimaryDark"
         android:orientation="vertical">
+
         <EditText
             android:id="@+id/reminder_title"
             android:layout_width="match_parent"
@@ -94,6 +95,7 @@
                 android:id="@+id/date"
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
+                android:onClick="selectDate"
                 android:background="@color/white"
                 android:clickable="true">
 
@@ -118,7 +120,6 @@
                         android:id="@+id/date_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:onClick="selectDate"
                         android:text="@string/date"
                         android:textColor="@color/black"
                         android:textSize="15dp" />
@@ -139,6 +140,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
                 android:background="@color/white"
+                android:onClick="selectTime"
                 android:clickable="true">
 
                 <ImageView
@@ -162,7 +164,6 @@
                         android:id="@+id/time_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:onClick="selectTime"
                         android:text="@string/time"
                         android:textColor="@color/black"
                         android:textSize="15dp" />
@@ -323,21 +324,7 @@
 
             </RelativeLayout>
 
-            <EditText
-                android:id="@+id/reminder_title"
-                android:layout_width="match_parent"
-                android:layout_height="140dp"
-                android:layout_marginLeft="72dp"
-                android:layout_marginRight="16dp"
-                android:gravity="top|left"
-                android:hint="@string/add_reminder"
-                android:inputType="textCapWords|textMultiLine"
-                android:lines="4"
-                android:minLines="4"
-                android:scrollHorizontally="false"
-                android:textColor="@color/white"
-                android:textColorHint="@color/primary_text_disabled_material_dark"
-                android:textSize="25dp" />
+
 
         </LinearLayout>
 

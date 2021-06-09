@@ -4,22 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/taskDetailLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/textViewFirstLetter"
         android:layout_width="60dip"
         android:layout_height="60dip"
-        android:layout_marginTop="22dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/circle"
         android:gravity="center"
         android:text="A"
         android:textColor="@color/white"
         android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="16dp" />
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/textViewTaskName"
@@ -37,8 +38,8 @@
         android:id="@+id/textViewTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="96dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginStart="108dp"
+        android:layout_marginTop="16dp"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewTaskDate"
@@ -61,10 +62,13 @@
         android:id="@+id/divider"
         android:layout_width="395dp"
         android:layout_height="1dp"
+        android:layout_marginTop="52dp"
         android:background="?android:attr/listDivider"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="27dp"
-        tools:layout_editor_absoluteY="115dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTaskDate"
+        tools:ignore="MissingConstraints" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
