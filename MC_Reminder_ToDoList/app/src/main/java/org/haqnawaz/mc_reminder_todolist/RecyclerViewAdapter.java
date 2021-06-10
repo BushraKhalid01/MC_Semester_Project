@@ -35,7 +35,7 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyVie
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.data= taskList.get(position);
-        //holder.textViewFirstLetter.setText(holder.data.getTitle().substring(0,1));
+        holder.textViewFirstLetter.setText(holder.data.getTitle().substring(0,1));
         holder.textViewTaskName.setText(holder.data.getTitle());
         holder.textViewTaskDate.setText(String.valueOf(holder.data.getDate()));
         holder.textViewTaskTime.setText(holder.data.getTime());

@@ -58,14 +58,17 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put(TASK_INTERVAL_TYPE, task.getIntervalType());
 
         long insert = db.insert(TASK_TABLE, null, cv);
+        db.close();
         if (insert == -1) { return false; }
         else{return true;}
     }
     public boolean deleteTask(Task task){
         SQLiteDatabase db = this.getWritableDatabase();
         long delete= db.delete(TASK_TABLE,TASK_ID+"=?",new String[]{String.valueOf(task.getId())});
+        db.close();
         if (delete == -1) { return false; }
         else{return true;}
+
     }
     public boolean updateTask(Task task){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -79,6 +82,7 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put(TASK_INTERVALS, task.getIntervals());
         cv.put(TASK_INTERVAL_TYPE, task.getIntervalType());
         long update= db.update(TASK_TABLE,cv, TASK_ID+"=?",new String[]{String.valueOf(task.getId())});
+        db.close();
         if (update == -1) { return false; }
         else{return true;}
     }
@@ -105,9 +109,5 @@ public class DBHelper extends SQLiteOpenHelper {
         DB.close();
         return myList;
     }
-    public void deleteTask(int id){
-        SQLiteDatabase DB =this.getReadableDatabase();
-        DB.delete(TASK_TABLE,"TASK_ID=?",new String[] {String.valueOf(id)});
-        DB.close();
-    }
+
 }

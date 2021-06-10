@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.Serializable;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     List<Task> taskList = new ArrayList<Task>();
     private Toolbar toolbar;
     boolean b;
+    TextView NO_REMINDER;
 
     DBHelper dbHelper = new DBHelper(MainActivity.this);
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         toolbar= findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(R.string.app_name);
+        NO_REMINDER=findViewById(R.id.no_reminder_text);
         if(savedInstanceState==null) {
             taskList = dbHelper.getAllTasks();
         }
@@ -67,7 +70,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         //recyclerView.setHasFixedSize(true);
 
         //LinearLayoutManager GridLayoutManager
-
+        if (taskList.size()!=0){
+            NO_REMINDER.setVisibility(View.INVISIBLE);
+        }
         layoutManager = new LinearLayoutManager(this);
 
         recyclerView.setLayoutManager(layoutManager);
@@ -102,28 +107,23 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void setAlarm(Calendar calendar,Task task) {
-        Toast.makeText(this, "hhh",Toast.LENGTH_SHORT).show();
         AlarmManager alarmMgr;
         PendingIntent alarmIntent;
         alarmMgr = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlertReceiver.class);
-        intent.putExtra("Task",task);
+        intent.putExtra("title",task.getTitle());
+        intent.putExtra("id",task.getId());
         alarmIntent = PendingIntent.getBroadcast(this, task.getId(), intent, 0);
         Log.d("ms", String.valueOf(calendar.getTimeInMillis()));
-        alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),1,
+        alarmMgr.setExact(AlarmManager.RTC_WAKEUP, 133000000,
                  alarmIntent);
     }
 
     private void cancelAlarm(int requestId) {
-        AlarmManager alarmManager =
-                (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlertReceiver.class);
-        PendingIntent pendingIntent =
-                PendingIntent.getService(this, requestId, intent,
-                        PendingIntent.FLAG_NO_CREATE);
-        if (pendingIntent != null && alarmManager != null) {
-            alarmManager.cancel(pendingIntent);
-        }
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, requestId, intent, 0);
+        alarmManager.cancel(pendingIntent);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -132,6 +132,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 
         for(int i=0;i<taskList.size();i++){
               Task t=taskList.get(i);
+
               long hour=Integer.parseInt(t.getTime().split(":")[0].trim());
             long min=Integer.parseInt(t.getTime().split(":")[1].split(" ")[1].trim());
               calender.set(Calendar.HOUR_OF_DAY, (int)hour);
@@ -141,9 +142,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
               calender.set(Calendar.YEAR, Integer.parseInt(t.getDate().split("/")[2].trim()));
               long seconds=(hour*3600)+(min*60);
               calender.setTimeInMillis(seconds* 1000);
-              if(!calender.before(Calendar.getInstance())){
-                  setAlarm(calender,t);
-              }
+            if(!calender.before(Calendar.getInstance())){
+                setAlarm(calender,t);
+            }
         }
     }
 

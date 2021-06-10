@@ -32,10 +32,10 @@ public class NotificationHelper extends ContextWrapper {
         }
         return mManager;
     }
-    public NotificationCompat.Builder getChannelNotification(String message) {
+    public NotificationCompat.Builder getChannelNotification(String title) {
         return new NotificationCompat.Builder(getApplicationContext(), channelID)
                 .setContentTitle("Task Reminder!")
-                .setContentText(message)
+                .setContentText(title)
                 .setSmallIcon(R.drawable.ic_save_task);
     }
 }

@@ -4,9 +4,12 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
@@ -25,7 +28,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 
 public class Reminder extends AppCompatActivity {
@@ -56,6 +61,7 @@ public class Reminder extends AppCompatActivity {
     boolean updateTask;
     ImageView delete_btn;
     String FirstLetter;
+    DBHelper dbHelper = new DBHelper(Reminder.this);
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,9 +87,10 @@ public class Reminder extends AppCompatActivity {
         {
             Calendar c = Calendar.getInstance();
             SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
-            SimpleDateFormat time = new SimpleDateFormat("HH:mm a");
             date2.setText(date.format(c.getTime()));
-            time2.setText(time.format(c.getTime()));
+            currHour=c.get(Calendar.HOUR_OF_DAY);
+            currMin=c.get(Calendar.MINUTE);
+            setTime(currHour,currMin);
 
             repeatNum.setText(repeatNo);
             repType.setText(repeatType);
@@ -129,41 +136,7 @@ public class Reminder extends AppCompatActivity {
         timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                if (hourOfDay >=0 && hourOfDay < 12){
-                    if(hourOfDay==0)
-                    {
-                        hourOfDay=hourOfDay+12;
-                    }
-                    amPm = "AM";
-                } else{
-                    if(hourOfDay>12)
-                    {
-                        hourOfDay=hourOfDay-12;
-                    }
-                    amPm = "PM";
-                }
-                if(minute<10)
-                {
-                    if(hourOfDay<10)
-                    {
-                        time2.setText("0"+hourOfDay+" : 0"+ minute+" "+amPm);
-                    }
-                    else
-                    {
-                        time2.setText(hourOfDay+" : 0"+ minute+" "+amPm);
-                    }
-                }
-                else
-                {
-                    if(hourOfDay<10)
-                    {
-                        time2.setText("0"+hourOfDay+" : "+ minute+" "+amPm);
-                    }
-                    else
-                    {
-                        time2.setText(hourOfDay+" : "+ minute+" "+amPm);
-                    }
-                }
+                setTime(hourOfDay,minute);
             }
         },currHour,currMin,false);
         timePickerDialog.show();
@@ -236,6 +209,7 @@ public class Reminder extends AppCompatActivity {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public void SaveTask(View view) {
         date2 = findViewById(R.id.set_date);
         time2 = findViewById(R.id.set_time);
@@ -247,7 +221,7 @@ public class Reminder extends AppCompatActivity {
         title = findViewById(R.id.reminder_title);
         FirstLetter=title.toString().substring(0,1);
         try {
-            task = new Task(id,title.getText().toString(),date2.getText().toString(),time2.getText().toString(),active.isChecked(),active.isChecked(),
+            task = new Task(id,title.getText().toString(),time2.getText().toString(),date2.getText().toString(),active.isChecked(),active.isChecked(),
             Integer.parseInt(repeatNum.getText().toString()),repeatTypeText.getText().toString());
             //task = new Task(1,"ABC","2/6/2021","08:56 PM",true,true,10,"Day");
             if(updateTask)
@@ -266,10 +240,19 @@ public class Reminder extends AppCompatActivity {
         if(updateTask)
         {
             boolean b = dbHelper.updateTask(task);
+            if(b){
+                cancelAlarms();
+                setAlarms();
+            }
         }
         else
         {
             boolean b = dbHelper.addTask(task);
+            if(b){
+                cancelAlarms();
+                setAlarms();
+            }
+
         }
         BackToMain(view);
     }
@@ -294,12 +277,99 @@ public class Reminder extends AppCompatActivity {
         catch (Exception e){
             Toast.makeText(Reminder.this, "Error", Toast.LENGTH_SHORT).show();
         }
-        DBHelper dbHelper = new DBHelper(Reminder.this);
+
         boolean b = dbHelper.deleteTask(task);
+        if(b)
+            cancelAlarm(task.getId());
         BackToMain(view);
     }
     public void BackToMain(View view) {
         Intent intent = new Intent(Reminder.this, MainActivity.class);
         startActivity(intent);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void setAlarm(Calendar calendar,Task task) {
+        AlarmManager alarmMgr;
+        PendingIntent alarmIntent;
+        alarmMgr = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlertReceiver.class);
+        intent.putExtra("title",task.getTitle());
+        intent.putExtra("id",task.getId());
+        alarmIntent = PendingIntent.getBroadcast(this, task.getId(), intent, 0);
+        alarmMgr.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                alarmIntent);
+
+    }
+
+    private void cancelAlarm(int requestId) {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlertReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, requestId, intent, 0);
+        alarmManager.cancel(pendingIntent);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void setAlarms(){
+        Calendar calender=Calendar.getInstance();
+        List<Task> taskList= dbHelper.getAllTasks();
+        for(int i=0;i<taskList.size();i++){
+            Task t = taskList.get(i);
+            long hour=Integer.parseInt(t.getTime().split(":")[0].trim());
+            long min=Integer.parseInt(t.getTime().split(":")[1].split(" ")[1].trim());
+            calender.set(Calendar.HOUR_OF_DAY, (int)hour);
+            calender.set(Calendar.MINUTE, (int)min);
+            calender.set(Calendar.DAY_OF_MONTH, Integer.parseInt(t.getDate().split("/")[0].trim()));
+            calender.set(Calendar.MONTH, Integer.parseInt(t.getDate().split("/")[1].trim()));
+            calender.set(Calendar.YEAR, Integer.parseInt(t.getDate().split("/")[2].trim()));
+            long seconds=(hour*3600)+(min*60);
+            calender.setTimeInMillis(seconds*1000);
+            setAlarm(calender,t);
+        }
+    }
+
+    private void cancelAlarms(){
+        List<Task> taskList= dbHelper.getAllTasks();
+        for(int i=0;i<taskList.size();i++){
+            cancelAlarm(taskList.get(i).getId());
+        }
+    }
+
+    private void setTime(int hourOfDay,int minute){
+        if (hourOfDay >=0 && hourOfDay < 12){
+            if(hourOfDay==0)
+            {
+                hourOfDay=hourOfDay+12;
+            }
+            amPm = "AM";
+        } else{
+            if(hourOfDay>12)
+            {
+                hourOfDay=hourOfDay-12;
+            }
+            amPm = "PM";
+        }
+        if(minute<10)
+        {
+            if(hourOfDay<10)
+            {
+                time2.setText("0"+hourOfDay+" : 0"+ minute+" "+amPm);
+            }
+            else
+            {
+                time2.setText(hourOfDay+" : 0"+ minute+" "+amPm);
+            }
+        }
+        else
+        {
+            if(hourOfDay<10)
+            {
+                time2.setText("0"+hourOfDay+" : "+ minute+" "+amPm);
+            }
+            else
+            {
+                time2.setText(hourOfDay+" : "+ minute+" "+amPm);
+            }
+        }
     }
 }
